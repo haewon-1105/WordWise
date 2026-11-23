@@ -32,6 +32,7 @@ fun HomeScreen(
     onStartSession: () -> Unit,
     onOpenStats: () -> Unit,
     onOpenSettings: () -> Unit,
+    onAddWord: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
@@ -41,6 +42,7 @@ fun HomeScreen(
         onStartSession = onStartSession,
         onOpenStats = onOpenStats,
         onOpenSettings = onOpenSettings,
+        onAddWord = onAddWord,
         modifier = modifier,
     )
 }
@@ -52,6 +54,7 @@ fun HomeContent(
     onStartSession: () -> Unit,
     onOpenStats: () -> Unit,
     onOpenSettings: () -> Unit,
+    onAddWord: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -116,6 +119,9 @@ fun HomeContent(
         }
 
         // Shortcuts use the same button weight so neither is visually pushed on the user.
+        OutlinedButton(onClick = onAddWord, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.home_add_word))
+        }
         OutlinedButton(onClick = onOpenStats, modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.home_shortcut_stats))
         }
@@ -134,6 +140,7 @@ private fun HomeContentPreview() {
             onStartSession = {},
             onOpenStats = {},
             onOpenSettings = {},
+            onAddWord = {},
         )
     }
 }

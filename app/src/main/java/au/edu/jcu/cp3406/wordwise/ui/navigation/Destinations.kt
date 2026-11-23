@@ -26,6 +26,10 @@ data object StatsRoute
 @Serializable
 data object SettingsRoute
 
+/** Not a tab: opened from Home and closed with the back button. */
+@Serializable
+data object AddWordRoute
+
 /** The four core screens shown in the bottom navigation bar, in display order. */
 enum class TopLevelDestination(
     val route: Any,

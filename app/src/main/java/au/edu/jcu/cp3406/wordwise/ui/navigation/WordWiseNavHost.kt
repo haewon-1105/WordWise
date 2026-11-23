@@ -18,6 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import au.edu.jcu.cp3406.wordwise.ui.addword.AddWordScreen
 import au.edu.jcu.cp3406.wordwise.ui.home.HomeScreen
 import au.edu.jcu.cp3406.wordwise.ui.settings.SettingsScreen
 import au.edu.jcu.cp3406.wordwise.ui.stats.StatsScreen
@@ -45,7 +46,11 @@ fun WordWiseNavHost(
                     onStartSession = { navController.navigateToTopLevel(TopLevelDestination.STUDY) },
                     onOpenStats = { navController.navigateToTopLevel(TopLevelDestination.STATS) },
                     onOpenSettings = { navController.navigateToTopLevel(TopLevelDestination.SETTINGS) },
+                    onAddWord = { navController.navigate(AddWordRoute) },
                 )
+            }
+            composable<AddWordRoute> {
+                AddWordScreen(onBack = { navController.popBackStack() })
             }
             composable<StudyRoute> { StudyScreen() }
             composable<StatsRoute> { StatsScreen() }

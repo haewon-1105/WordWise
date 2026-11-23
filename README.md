@@ -12,6 +12,7 @@ An Android flashcard app that helps university students build academic English v
 | Study (activity screen) | Flashcard session with spaced repetition | Placeholder |
 | Stats (user statistics) | Progress, accuracy, words mastered | Placeholder |
 | Settings | Daily goal, difficulty, sound | Placeholder |
+| Add a word (extra) | Look up a word online and add a chosen meaning | Done |
 
 ## Architecture
 
@@ -20,7 +21,7 @@ An Android flashcard app that helps university students build academic English v
 - **Dependency injection:** Hilt modules for the database, repository bindings and pure model classes.
 - **Layers:** Compose UI → ViewModel (`StateFlow`) → `StudyRepository` interface → Room DAOs. ViewModels never touch Room directly.
 - **Model package** (`model/`): pure Kotlin with no Android dependencies, so all learning logic is covered by JVM unit tests.
-- **Planned:** the Free Dictionary API as a network data source (Step 3).
+- **Network:** Retrofit + OkHttp call the Free Dictionary API; a pure Kotlin parser and mapper turn every response and HTTP status into a `LookupResult`.
 
 ## Learning design
 
@@ -28,6 +29,16 @@ An Android flashcard app that helps university students build academic English v
 - **Daily goal** (`SessionPlanner`): due reviews first, then new words, up to the goal the learner sets. When the goal is met the session is empty and the app shows “Done for today”.
 - **Forgiving streaks** (`StreakCalculator`): one rest day in a row does not break a streak, and today never counts as missed.
 - **Word deck:** the 60 headwords of Sublist 1 of the Academic Word List [1], with definitions and example sentences written for this app, at three difficulty levels.
+
+## Online dictionary (Free Dictionary API)
+
+The **Add a word** screen (opened from Home) looks up a word at `https://api.dictionaryapi.dev/api/v2/entries/en/{word}` and shows its pronunciation, parts of speech, definitions and examples. The learner picks the meaning they need and it joins their collection; it appears first in the next session.
+
+- **Input check before sending** (`WordInputValidator`): only a single word or short phrase of letters is sent, so a mistyped sentence or personal detail never leaves the device.
+- **Every outcome is explained:** found, not found, invalid input, offline and service errors each have their own message. The built-in deck keeps working offline.
+- **Pronunciation:** the play button uses the dictionary’s recording when it exists: the clip is downloaded with the app’s OkHttp client, cached and played from the local file, so it replays offline. The API sometimes lists recordings that no longer exist (HTTP 404); then the device’s own text-to-speech voice reads the word, and the screen says so. Nothing plays automatically. The phonetic spelling shown is the one recorded with the audio, and pronunciation data fetched for a word is cached in Room (`withPronunciation`).
+- **Privacy:** requests carry only the word. There is no account, no identifier and no logging interceptor.
+- **Attribution:** definitions come from Wiktionary through the Free Dictionary API, and the Wiktionary source link is shown with each result.
 
 ## Data storage (Room)
 
@@ -57,7 +68,7 @@ Model unit tests live in `app/src/test` and run on the JVM:
 ./gradlew testDebugUnitTest
 ```
 
-They cover the Leitner scheduler, session planning against the daily goal, the forgiving streak, statistics arithmetic and parsing of the bundled deck (including a check that the shipped deck file is valid).
+They cover the Leitner scheduler, session planning against the daily goal, the forgiving streak, statistics arithmetic, parsing of the bundled deck (including a check that the shipped deck file is valid), input validation, and parsing and status mapping of dictionary responses, including the API’s quirks (merged entries, empty audio links, protocol-relative URLs, malformed JSON).
 
 ## Build
 
@@ -67,7 +78,10 @@ Open the project in Android Studio (Ladybug or newer), let Gradle sync, then run
 
 1. Project skeleton: Gradle version catalog, Material 3 theme, Hilt, type-safe navigation between the four core screens.
 2. Learning model and local database: Leitner scheduler, session planner, forgiving streak and statistics calculator with unit tests; Room database, DAOs and repository; academic word deck seeded on first launch and shown on the Home screen.
+3. Online dictionary: Retrofit service for the Free Dictionary API, response parser and input validator with unit tests, Add a word screen with pronunciation playback, and pronunciation caching in Room.
 
 ## References
 
 [1] A. Coxhead, “A new academic word list,” *TESOL Quarterly*, vol. 34, no. 2, pp. 213–238, 2000.
+
+[2] Free Dictionary API. [Online]. Available: https://dictionaryapi.dev/

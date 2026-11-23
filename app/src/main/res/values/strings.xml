@@ -18,6 +18,29 @@
     <string name="home_start_session">Start today’s session</string>
     <string name="home_shortcut_stats">See my progress</string>
     <string name="home_shortcut_settings">Change my daily goal</string>
+    <string name="home_add_word">Add a word from the dictionary</string>
+
+    <!-- Shared -->
+    <string name="action_back">Back</string>
+
+    <!-- Add word (Free Dictionary API) -->
+    <string name="add_word_title">Add a word</string>
+    <string name="add_word_intro">Look up a word you met in your reading and add the meaning you need to your collection.</string>
+    <string name="add_word_field_label">English word or short phrase</string>
+    <string name="add_word_search">Look up</string>
+    <string name="add_word_privacy_note">Only the word you type is sent to dictionaryapi.dev. Your progress and history stay on this device.</string>
+    <string name="add_word_not_found">No definition was found. Check the spelling or try a different form of the word.</string>
+    <string name="add_word_invalid">Type a single English word or short phrase, using letters only.</string>
+    <string name="add_word_offline">You seem to be offline. Your saved words still work; try the lookup again when you are connected.</string>
+    <string name="add_word_service_error">The dictionary is not responding right now. Please try again later.</string>
+    <string name="add_word_play">Play pronunciation</string>
+    <string name="add_word_example">Example: %1$s</string>
+    <string name="add_word_add_meaning">Add this meaning</string>
+    <string name="add_word_added">Added to your collection. It will appear in your next session.</string>
+    <string name="add_word_already_added">This word is already in your collection.</string>
+    <string name="add_word_audio_failed">The pronunciation could not be played. Check that a text-to-speech voice is installed in your device settings.</string>
+    <string name="add_word_device_voice">The dictionary’s recording isn’t available, so your device’s voice read the word.</string>
+    <string name="add_word_attribution">Definitions from Wiktionary via the Free Dictionary API, shared under a Creative Commons licence.</string>
 
     <!-- Placeholders for screens built in later steps -->
     <string name="study_placeholder">Flashcards will appear here.</string>
