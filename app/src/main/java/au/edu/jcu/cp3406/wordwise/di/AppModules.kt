@@ -8,10 +8,14 @@ import au.edu.jcu.cp3406.wordwise.data.local.WordWiseDatabase
 import au.edu.jcu.cp3406.wordwise.data.local.dao.StatsDao
 import au.edu.jcu.cp3406.wordwise.data.local.dao.StudyDao
 import au.edu.jcu.cp3406.wordwise.data.local.dao.WordDao
+import au.edu.jcu.cp3406.wordwise.data.repository.DictionaryRepository
+import au.edu.jcu.cp3406.wordwise.data.repository.NetworkDictionaryRepository
 import au.edu.jcu.cp3406.wordwise.data.repository.RoomStudyRepository
 import au.edu.jcu.cp3406.wordwise.data.repository.StudyRepository
 import au.edu.jcu.cp3406.wordwise.model.LearningStatsCalculator
 import au.edu.jcu.cp3406.wordwise.model.LeitnerScheduler
+import au.edu.jcu.cp3406.wordwise.util.DefaultPronunciationPlayer
+import au.edu.jcu.cp3406.wordwise.util.PronunciationPlayer
 import au.edu.jcu.cp3406.wordwise.util.SystemTimeProvider
 import au.edu.jcu.cp3406.wordwise.util.TimeProvider
 import dagger.Binds
@@ -51,7 +55,13 @@ abstract class DataModule {
     abstract fun bindStudyRepository(impl: RoomStudyRepository): StudyRepository
 
     @Binds
+    abstract fun bindDictionaryRepository(impl: NetworkDictionaryRepository): DictionaryRepository
+
+    @Binds
     abstract fun bindDeckSource(impl: AssetDeckSource): DeckSource
+
+    @Binds
+    abstract fun bindPronunciationPlayer(impl: DefaultPronunciationPlayer): PronunciationPlayer
 
     @Binds
     abstract fun bindTimeProvider(impl: SystemTimeProvider): TimeProvider

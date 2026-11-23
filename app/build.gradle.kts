@@ -71,6 +71,10 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
+    // Networking (Free Dictionary API)
+    implementation(libs.retrofit)
+    implementation(libs.okhttp)
+
     // Dependency injection
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)

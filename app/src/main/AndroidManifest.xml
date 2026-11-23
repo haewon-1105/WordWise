@@ -4,6 +4,13 @@
     <!-- Needed to fetch word definitions from the Free Dictionary API (Step 3). -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Lets the app find the device's text-to-speech engine (package visibility, Android 11+). -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
+
     <application
         android:name=".WordWiseApp"
         android:allowBackup="true"

@@ -35,6 +35,10 @@ interface WordDao {
     @Query("SELECT * FROM words WHERE term = :term COLLATE NOCASE LIMIT 1")
     suspend fun findByTerm(term: String): WordEntity?
 
+    /** Caches pronunciation fetched from the dictionary so it is downloaded only once. */
+    @Query("UPDATE words SET phonetic = :phonetic, audio_url = :audioUrl WHERE id = :id")
+    suspend fun updatePronunciation(id: Long, phonetic: String?, audioUrl: String?)
+
     /** Studied words whose review day has arrived, most overdue and weakest first. */
     @Transaction
     @Query(
