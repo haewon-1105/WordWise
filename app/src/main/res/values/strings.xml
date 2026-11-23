@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">WordWise</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_study">Study</string>
+    <string name="nav_stats">Stats</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Home -->
+    <string name="home_greeting">Build your academic vocabulary</string>
+    <string name="home_subtitle">Short daily sessions with spaced repetition. You set the goal, and the app stops when you reach it.</string>
+    <string name="home_today_title">Today</string>
+    <string name="home_loading">Loading your word deck…</string>
+    <string name="home_load_error">The word deck couldn’t be loaded. Restart the app to try again.</string>
+    <string name="home_deck_summary">%1$d words in your collection · %2$d mastered</string>
+    <string name="home_reviewed_today">Cards reviewed today: %1$d</string>
+    <string name="home_start_session">Start today’s session</string>
+    <string name="home_shortcut_stats">See my progress</string>
+    <string name="home_shortcut_settings">Change my daily goal</string>
+
+    <!-- Placeholders for screens built in later steps -->
+    <string name="study_placeholder">Flashcards will appear here.</string>
+    <string name="stats_placeholder">Your progress will appear here.</string>
+    <string name="settings_placeholder">Daily goal, difficulty and sound settings will appear here.</string>
+</resources>
