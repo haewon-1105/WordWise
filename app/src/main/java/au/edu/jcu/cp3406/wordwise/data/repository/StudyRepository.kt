@@ -24,4 +24,7 @@ interface StudyRepository {
     fun observeReviewedToday(): Flow<Int>
 
     fun observeStats(): Flow<LearningStats>
+
+    /** Deletes all progress and answer history on this device; the words themselves stay. */
+    suspend fun resetProgress()
 }

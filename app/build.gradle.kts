@@ -71,6 +71,9 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
+    // Learner preferences
+    implementation(libs.androidx.datastore.preferences)
+
     // Networking (Free Dictionary API)
     implementation(libs.retrofit)
     implementation(libs.okhttp)

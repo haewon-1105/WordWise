@@ -1,6 +1,10 @@
 package au.edu.jcu.cp3406.wordwise.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import au.edu.jcu.cp3406.wordwise.data.deck.AssetDeckSource
 import au.edu.jcu.cp3406.wordwise.data.deck.DeckSource
@@ -8,9 +12,11 @@ import au.edu.jcu.cp3406.wordwise.data.local.WordWiseDatabase
 import au.edu.jcu.cp3406.wordwise.data.local.dao.StatsDao
 import au.edu.jcu.cp3406.wordwise.data.local.dao.StudyDao
 import au.edu.jcu.cp3406.wordwise.data.local.dao.WordDao
+import au.edu.jcu.cp3406.wordwise.data.repository.DataStoreSettingsRepository
 import au.edu.jcu.cp3406.wordwise.data.repository.DictionaryRepository
 import au.edu.jcu.cp3406.wordwise.data.repository.NetworkDictionaryRepository
 import au.edu.jcu.cp3406.wordwise.data.repository.RoomStudyRepository
+import au.edu.jcu.cp3406.wordwise.data.repository.SettingsRepository
 import au.edu.jcu.cp3406.wordwise.data.repository.StudyRepository
 import au.edu.jcu.cp3406.wordwise.model.LearningStatsCalculator
 import au.edu.jcu.cp3406.wordwise.model.LeitnerScheduler
@@ -44,6 +50,12 @@ object DatabaseModule {
 
     @Provides
     fun provideStatsDao(database: WordWiseDatabase): StatsDao = database.statsDao()
+
+    /** Preferences file for Settings; one instance per process, as DataStore requires. */
+    @Provides
+    @Singleton
+    fun provideSettingsDataStore(@ApplicationContext context: Context): DataStore<Preferences> =
+        PreferenceDataStoreFactory.create { context.preferencesDataStoreFile("settings") }
 }
 
 /** Binds interfaces to their production implementations. Tests can swap these out. */
@@ -53,6 +65,9 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindStudyRepository(impl: RoomStudyRepository): StudyRepository
+
+    @Binds
+    abstract fun bindSettingsRepository(impl: DataStoreSettingsRepository): SettingsRepository
 
     @Binds
     abstract fun bindDictionaryRepository(impl: NetworkDictionaryRepository): DictionaryRepository

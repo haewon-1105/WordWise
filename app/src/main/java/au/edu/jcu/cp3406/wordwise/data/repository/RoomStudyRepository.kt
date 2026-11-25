@@ -98,4 +98,8 @@ class RoomStudyRepository @Inject constructor(
             )
         }
     }
+
+    override suspend fun resetProgress() {
+        studyDao.resetProgress()
+    }
 }

@@ -84,6 +84,19 @@ abstract class StudyDao {
         insertReview(review)
     }
 
+    @Query("DELETE FROM card_progress")
+    abstract suspend fun deleteAllProgress()
+
+    @Query("DELETE FROM review_log")
+    abstract suspend fun deleteAllReviews()
+
+    /** Erases learning history while keeping the learner's word collection. */
+    @Transaction
+    open suspend fun resetProgress() {
+        deleteAllReviews()
+        deleteAllProgress()
+    }
+
     @Query("SELECT COUNT(*) FROM review_log WHERE epoch_day = :epochDay")
     abstract suspend fun reviewCountOn(epochDay: Long): Int
 
