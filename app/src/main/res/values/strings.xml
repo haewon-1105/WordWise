@@ -49,6 +49,29 @@
     <string name="study_session_summary">This session: you knew %1$d of %2$d.</string>
     <string name="study_load_failed">Your cards could not be loaded.</string>
 
+    <!-- Stats -->
+    <string name="stats_empty">Your progress will appear here after your first study session.</string>
+    <string name="stats_no_value">—</string>
+    <string name="stats_mastered">words mastered of %1$d</string>
+    <string name="stats_accuracy">accuracy (%1$d of %2$d answers)</string>
+    <plurals name="stats_streak">
+        <item quantity="one">day study streak</item>
+        <item quantity="other">days study streak</item>
+    </plurals>
+    <string name="stats_started">words started</string>
+    <string name="stats_streak_help">A single rest day does not break your streak.</string>
+    <string name="stats_week_title">Last 7 days</string>
+    <string name="stats_week_description">Cards reviewed in the last 7 days, daily goal %1$d: %2$s</string>
+    <string name="stats_week_legend">Darker bars show days you reached your goal of %1$d.</string>
+    <string name="stats_boxes_title">Words by memory box</string>
+    <string name="stats_boxes_help">Words move up a box each time you know them. Box 5 means mastered.</string>
+    <string name="stats_box_label">Box %1$d</string>
+    <plurals name="stats_box_row">
+        <item quantity="one">Box %1$d: %2$d word</item>
+        <item quantity="other">Box %1$d: %2$d words</item>
+    </plurals>
+    <string name="stats_privacy">Only you can see these numbers. They are stored on this device and never compared with other learners.</string>
+
     <!-- Settings -->
     <string name="settings_goal_title">Daily goal</string>
     <string name="settings_goal_value">%1$d cards a day</string>
@@ -92,5 +115,4 @@
     <string name="add_word_attribution">Definitions from Wiktionary via the Free Dictionary API, shared under a Creative Commons licence.</string>
 
     <!-- Placeholders for screens built in later steps -->
-    <string name="stats_placeholder">Your progress will appear here.</string>
 </resources>

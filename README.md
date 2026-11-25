@@ -10,7 +10,7 @@ An Android flashcard app that helps university students build academic English v
 |---|---|---|
 | Home (landing page) | What the app does, progress toward today’s goal, shortcuts | Done |
 | Study (activity screen) | Flashcards with a 3D flip, honest self-check and spaced repetition | Done |
-| Stats (user statistics) | Progress, accuracy, words mastered | Placeholder |
+| Stats (user statistics) | Mastered words, accuracy, forgiving streak, 7-day chart, words per memory box | Done |
 | Settings | Daily goal, difficulty, read-aloud, reset my progress | Done |
 | Add a word (extra) | Look up a word online and add a chosen meaning | Done |
 
@@ -48,6 +48,10 @@ The **Add a word** screen (opened from Home) looks up a word at `https://api.dic
 - After each answer the screen says where the card went (“moved to box 3, back in 4 days”), so the schedule is transparent.
 - Progress is shown against the learner’s own goal (“Card 3 of 10”). When the goal is met the screen says **Done for today** and offers progress and settings, not more cards.
 - The flip animation respects the system “remove animations” setting.
+
+## Statistics
+
+The Stats screen updates live from Room `Flow` queries: words mastered, accuracy, a forgiving streak, reviews over the last 7 days against the learner’s goal, and words in each Leitner box. Progress is personal only, with no rankings. Every chart has a text equivalent for TalkBack, and goal days are marked by bar shade and explained in a caption, not by colour alone.
 
 ## Settings (DataStore)
 
@@ -100,6 +104,7 @@ Open the project in Android Studio (Ladybug or newer), let Gradle sync, then run
 2. Learning model and local database: Leitner scheduler, session planner, forgiving streak and statistics calculator with unit tests; Room database, DAOs and repository; academic word deck seeded on first launch and shown on the Home screen.
 3. Online dictionary: Retrofit service for the Free Dictionary API, response parser and input validator with unit tests, Add a word screen with pronunciation playback, and pronunciation caching in Room.
 4. Study and Settings: flashcard session with flip animation, transparent scheduling feedback and Done for today; DataStore settings for goal, difficulty and read-aloud; progress reset; Home shows progress toward the goal.
+5. Statistics: live Stats screen with summary tiles, 7-day chart and memory-box chart, each with TalkBack text.
 
 ## References
 
