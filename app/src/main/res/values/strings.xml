@@ -14,7 +14,8 @@
     <string name="home_loading">Loading your word deck…</string>
     <string name="home_load_error">The word deck couldn’t be loaded. Restart the app to try again.</string>
     <string name="home_deck_summary">%1$d words in your collection · %2$d mastered</string>
-    <string name="home_reviewed_today">Cards reviewed today: %1$d</string>
+    <string name="home_reviewed_today">%1$d of %2$d cards reviewed today</string>
+    <string name="home_goal_met">Done for today. Your next cards will be ready tomorrow.</string>
     <string name="home_start_session">Start today’s session</string>
     <string name="home_shortcut_stats">See my progress</string>
     <string name="home_shortcut_settings">Change my daily goal</string>
@@ -22,6 +23,54 @@
 
     <!-- Shared -->
     <string name="action_back">Back</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_try_again">Try again</string>
+
+    <!-- Study (activity screen) -->
+    <string name="study_progress">Card %1$d of %2$d</string>
+    <string name="study_new_word">New word</string>
+    <string name="study_think_first">Think of the meaning first, then turn the card over to check.</string>
+    <string name="study_show_meaning">Show meaning</string>
+    <string name="study_turn_card">turn the card over</string>
+    <string name="study_card_word_side">Showing the word</string>
+    <string name="study_card_meaning_side">Showing the meaning</string>
+    <string name="study_self_check">Did you know it? Be honest; the schedule adapts to your answer.</string>
+    <string name="study_still_learning">Still learning</string>
+    <string name="study_knew_it">I knew it</string>
+    <plurals name="study_feedback_correct">
+        <item quantity="one">Last card moved to box %1$d. You will see it again in %2$d day.</item>
+        <item quantity="other">Last card moved to box %1$d. You will see it again in %2$d days.</item>
+    </plurals>
+    <string name="study_feedback_again">Last card went back to box 1. You will see it again tomorrow.</string>
+    <string name="study_done_title">Done for today</string>
+    <string name="study_done_body">You reviewed %1$d cards and reached your goal of %2$d. Rest is part of learning; your next cards will be ready tomorrow.</string>
+    <string name="study_nothing_due_title">Nothing due right now</string>
+    <string name="study_nothing_due_body">Every word at this difficulty is scheduled for a later day. Add a word, choose a harder level, or come back tomorrow.</string>
+    <string name="study_session_summary">This session: you knew %1$d of %2$d.</string>
+    <string name="study_load_failed">Your cards could not be loaded.</string>
+
+    <!-- Settings -->
+    <string name="settings_goal_title">Daily goal</string>
+    <string name="settings_goal_value">%1$d cards a day</string>
+    <string name="settings_goal_help">The app stops when you reach this number. Short, regular sessions help memory more than long ones.</string>
+    <string name="settings_difficulty_title">Difficulty</string>
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_easy_help">Common academic words (level 1)</string>
+    <string name="difficulty_medium">Medium</string>
+    <string name="difficulty_medium_help">Levels 1 and 2</string>
+    <string name="difficulty_hard">Hard</string>
+    <string name="difficulty_hard_help">All levels, including abstract words</string>
+    <string name="settings_sound_title">Sound</string>
+    <string name="settings_read_aloud">Read each word aloud</string>
+    <string name="settings_read_aloud_help">Plays the word when its card appears, using the dictionary recording or your device’s voice. Off by default.</string>
+    <string name="settings_data_title">Your data</string>
+    <string name="settings_data_body">Your progress and answer history are stored only on this device. WordWise has no account, ads or tracking.</string>
+    <string name="settings_reset_button">Reset my learning progress</string>
+    <string name="settings_reset_dialog_title">Reset learning progress?</string>
+    <string name="settings_reset_dialog_body">This deletes your answer history and card progress on this device. Your word collection stays. This cannot be undone.</string>
+    <string name="settings_reset_confirm">Reset</string>
+    <string name="settings_reset_done">Your learning progress was reset.</string>
+    <string name="settings_sources">Word list: Academic Word List, Sublist 1 (Coxhead, 2000). Definitions for words you add: Wiktionary, via the Free Dictionary API.</string>
 
     <!-- Add word (Free Dictionary API) -->
     <string name="add_word_title">Add a word</string>
@@ -43,7 +92,5 @@
     <string name="add_word_attribution">Definitions from Wiktionary via the Free Dictionary API, shared under a Creative Commons licence.</string>
 
     <!-- Placeholders for screens built in later steps -->
-    <string name="study_placeholder">Flashcards will appear here.</string>
     <string name="stats_placeholder">Your progress will appear here.</string>
-    <string name="settings_placeholder">Daily goal, difficulty and sound settings will appear here.</string>
 </resources>

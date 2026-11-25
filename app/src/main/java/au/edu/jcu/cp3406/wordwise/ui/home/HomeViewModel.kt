@@ -2,6 +2,7 @@ package au.edu.jcu.cp3406.wordwise.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import au.edu.jcu.cp3406.wordwise.data.repository.SettingsRepository
 import au.edu.jcu.cp3406.wordwise.data.repository.StudyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,11 +20,15 @@ data class HomeUiState(
     val totalWords: Int = 0,
     val wordsMastered: Int = 0,
     val reviewedToday: Int = 0,
-)
+    val dailyGoal: Int = 0,
+) {
+    val goalMet: Boolean get() = dailyGoal > 0 && reviewedToday >= dailyGoal
+}
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: StudyRepository,
+    settingsRepository: SettingsRepository,
 ) : ViewModel() {
 
     private val isLoading = MutableStateFlow(true)
@@ -48,13 +53,15 @@ class HomeViewModel @Inject constructor(
         isLoading,
         loadFailed,
         repository.observeStats(),
-    ) { loading, failed, stats ->
+        settingsRepository.settings,
+    ) { loading, failed, stats, settings ->
         HomeUiState(
             isLoading = loading,
             loadFailed = failed,
             totalWords = stats.totalWords,
             wordsMastered = stats.wordsMastered,
             reviewedToday = stats.reviewsToday,
+            dailyGoal = settings.dailyGoal,
         )
     }.stateIn(
         scope = viewModelScope,

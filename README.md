@@ -8,10 +8,10 @@ An Android flashcard app that helps university students build academic English v
 
 | Screen | Purpose | Status |
 |---|---|---|
-| Home (landing page) | What the app does, today’s progress, shortcuts | Shows deck and today’s progress |
-| Study (activity screen) | Flashcard session with spaced repetition | Placeholder |
+| Home (landing page) | What the app does, progress toward today’s goal, shortcuts | Done |
+| Study (activity screen) | Flashcards with a 3D flip, honest self-check and spaced repetition | Done |
 | Stats (user statistics) | Progress, accuracy, words mastered | Placeholder |
-| Settings | Daily goal, difficulty, sound | Placeholder |
+| Settings | Daily goal, difficulty, read-aloud, reset my progress | Done |
 | Add a word (extra) | Look up a word online and add a chosen meaning | Done |
 
 ## Architecture
@@ -39,6 +39,26 @@ The **Add a word** screen (opened from Home) looks up a word at `https://api.dic
 - **Pronunciation:** the play button uses the dictionary’s recording when it exists: the clip is downloaded with the app’s OkHttp client, cached and played from the local file, so it replays offline. The API sometimes lists recordings that no longer exist (HTTP 404); then the device’s own text-to-speech voice reads the word, and the screen says so. Nothing plays automatically. The phonetic spelling shown is the one recorded with the audio, and pronunciation data fetched for a word is cached in Room (`withPronunciation`).
 - **Privacy:** requests carry only the word. There is no account, no identifier and no logging interceptor.
 - **Attribution:** definitions come from Wiktionary through the Free Dictionary API, and the Wiktionary source link is shown with each result.
+
+## Study session
+
+- `StudySession` is an immutable state machine (show → turn over → answer → next), unit tested on the JVM.
+- A card must be turned over before it can be answered, so every answer is an honest self-check.
+- **“Still learning”** and **“I knew it”** have identical styling; neither is pushed on the learner.
+- After each answer the screen says where the card went (“moved to box 3, back in 4 days”), so the schedule is transparent.
+- Progress is shown against the learner’s own goal (“Card 3 of 10”). When the goal is met the screen says **Done for today** and offers progress and settings, not more cards.
+- The flip animation respects the system “remove animations” setting.
+
+## Settings (DataStore)
+
+| Setting | Default | Notes |
+|---|---|---|
+| Daily goal | 10 cards | 5–30 in steps of 5; stored values are sanitised |
+| Difficulty | Medium | Easy = level 1, Medium = levels 1–2, Hard = all |
+| Read each word aloud | Off | Audio is opt-in |
+| Reset my learning progress | — | Deletes answer history and Leitner state after confirmation; words stay |
+
+Settings are stored with Jetpack DataStore; a corrupted file falls back to the defaults.
 
 ## Data storage (Room)
 
@@ -79,6 +99,7 @@ Open the project in Android Studio (Ladybug or newer), let Gradle sync, then run
 1. Project skeleton: Gradle version catalog, Material 3 theme, Hilt, type-safe navigation between the four core screens.
 2. Learning model and local database: Leitner scheduler, session planner, forgiving streak and statistics calculator with unit tests; Room database, DAOs and repository; academic word deck seeded on first launch and shown on the Home screen.
 3. Online dictionary: Retrofit service for the Free Dictionary API, response parser and input validator with unit tests, Add a word screen with pronunciation playback, and pronunciation caching in Room.
+4. Study and Settings: flashcard session with flip animation, transparent scheduling feedback and Done for today; DataStore settings for goal, difficulty and read-aloud; progress reset; Home shows progress toward the goal.
 
 ## References
 

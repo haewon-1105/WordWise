@@ -52,7 +52,13 @@ fun WordWiseNavHost(
             composable<AddWordRoute> {
                 AddWordScreen(onBack = { navController.popBackStack() })
             }
-            composable<StudyRoute> { StudyScreen() }
+            composable<StudyRoute> {
+                StudyScreen(
+                    onOpenStats = { navController.navigateToTopLevel(TopLevelDestination.STATS) },
+                    onOpenSettings = { navController.navigateToTopLevel(TopLevelDestination.SETTINGS) },
+                    onAddWord = { navController.navigate(AddWordRoute) },
+                )
+            }
             composable<StatsRoute> { StatsScreen() }
             composable<SettingsRoute> { SettingsScreen() }
         }

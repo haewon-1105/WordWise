@@ -103,17 +103,41 @@ fun HomeContent(
                             style = MaterialTheme.typography.bodyMedium,
                         )
                         Text(
-                            text = stringResource(R.string.home_reviewed_today, uiState.reviewedToday),
+                            text = stringResource(
+                                R.string.home_reviewed_today,
+                                uiState.reviewedToday,
+                                uiState.dailyGoal,
+                            ),
                             style = MaterialTheme.typography.bodyMedium,
                         )
+                        if (uiState.dailyGoal > 0) {
+                            LinearProgressIndicator(
+                                progress = {
+                                    (uiState.reviewedToday.toFloat() / uiState.dailyGoal).coerceAtMost(1f)
+                                },
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
+                        if (uiState.goalMet) {
+                            Text(
+                                text = stringResource(R.string.home_goal_met),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.primary,
+                            )
+                        }
                     }
                 }
+                // Once the goal is met, the main action becomes reviewing progress, not more cards.
                 Button(
-                    onClick = onStartSession,
+                    onClick = if (uiState.goalMet) onOpenStats else onStartSession,
                     enabled = !uiState.isLoading && !uiState.loadFailed,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text(stringResource(R.string.home_start_session))
+                    Text(
+                        stringResource(
+                            if (uiState.goalMet) R.string.home_shortcut_stats else R.string.home_start_session,
+                        ),
+                    )
                 }
             }
         }
@@ -136,7 +160,7 @@ fun HomeContent(
 private fun HomeContentPreview() {
     WordWiseTheme {
         HomeContent(
-            uiState = HomeUiState(isLoading = false, totalWords = 60, wordsMastered = 4, reviewedToday = 7),
+            uiState = HomeUiState(isLoading = false, totalWords = 60, wordsMastered = 4, reviewedToday = 7, dailyGoal = 10),
             onStartSession = {},
             onOpenStats = {},
             onOpenSettings = {},
