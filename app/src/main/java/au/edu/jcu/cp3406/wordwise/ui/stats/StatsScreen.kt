@@ -201,7 +201,7 @@ private fun WeekChart(days: List<DailyReviewCount>, dailyGoal: Int) {
                                         if (reachedGoal) {
                                             MaterialTheme.colorScheme.primary
                                         } else {
-                                            MaterialTheme.colorScheme.secondary
+                                            MaterialTheme.colorScheme.tertiary
                                         },
                                     ),
                             )
