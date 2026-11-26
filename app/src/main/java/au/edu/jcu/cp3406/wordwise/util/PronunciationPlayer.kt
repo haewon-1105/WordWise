@@ -4,10 +4,13 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -15,6 +18,7 @@ import java.io.File
 import java.io.IOException
 import java.util.Locale
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.coroutines.resume
 
 /** How a pronunciation was played, so the UI can be honest about it. */
@@ -42,7 +46,10 @@ interface PronunciationPlayer {
  * lists recordings that no longer exist (HTTP 404); those are remembered for the session and
  * the device voice is used instead. Text-to-speech runs on the device, so nothing extra is sent
  * anywhere. Audio only plays when the learner taps the play button.
+ *
+ * One shared instance for the whole app, so only one speech engine is ever started.
  */
+@Singleton
 class DefaultPronunciationPlayer @Inject constructor(
     @ApplicationContext private val context: Context,
     private val client: OkHttpClient,
@@ -51,6 +58,7 @@ class DefaultPronunciationPlayer @Inject constructor(
     private var player: MediaPlayer? = null
     private var textToSpeech: TextToSpeech? = null
     private val unavailableRecordings = mutableSetOf<String>()
+    private val engineLock = Mutex()
 
     override suspend fun play(term: String, recordingUrl: String?): PlaybackSource? {
         if (recordingUrl != null && recordingUrl !in unavailableRecordings) {
@@ -129,9 +137,16 @@ class DefaultPronunciationPlayer @Inject constructor(
 
     // --- Device voice ------------------------------------------------------------------------
 
-    private suspend fun speak(term: String): Boolean = withContext(Dispatchers.Main) {
-        val engine = textToSpeech ?: createTextToSpeech() ?: return@withContext false
-        engine.speak(term, TextToSpeech.QUEUE_FLUSH, null, UTTERANCE_ID) == TextToSpeech.SUCCESS
+    private suspend fun speak(term: String): Boolean {
+        // The lock stops two quick taps from starting two engines at once.
+        val engine = engineLock.withLock {
+            textToSpeech ?: withContext(Dispatchers.Main) { createTextToSpeech() }
+        } ?: return false
+        return withContext(Dispatchers.Main) {
+            val result = engine.speak(term, TextToSpeech.QUEUE_FLUSH, null, UTTERANCE_ID)
+            Log.d(TAG, "Device voice asked to say \"$term\" (result $result)")
+            result == TextToSpeech.SUCCESS
+        }
     }
 
     /** Starts the device's speech engine with an English voice, or returns null if there is none. */
@@ -151,9 +166,41 @@ class DefaultPronunciationPlayer @Inject constructor(
                 continuation.resume(null)
             } else {
                 engine.language = locale
+                engine.setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .build(),
+                )
+                engine.setOnUtteranceProgressListener(SpeechLogger)
+                val features = engine.voice?.features.orEmpty()
+                if (TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED in features) {
+                    Log.w(TAG, "English voice data for $locale is not downloaded on this device yet")
+                }
+                Log.d(TAG, "Device voice ready: $locale, voice ${engine.voice?.name}")
                 textToSpeech = engine
                 continuation.resume(engine)
             }
+        }
+    }
+
+    /** Logs what the speech engine actually did, so silent failures show up in Logcat. */
+    private object SpeechLogger : UtteranceProgressListener() {
+        override fun onStart(utteranceId: String?) {
+            Log.d(TAG, "Device voice started speaking")
+        }
+
+        override fun onDone(utteranceId: String?) {
+            Log.d(TAG, "Device voice finished")
+        }
+
+        @Deprecated("Required override for older API levels")
+        override fun onError(utteranceId: String?) {
+            Log.w(TAG, "Device voice failed")
+        }
+
+        override fun onError(utteranceId: String?, errorCode: Int) {
+            Log.w(TAG, "Device voice failed with error $errorCode")
         }
     }
 
