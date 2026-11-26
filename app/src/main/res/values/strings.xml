@@ -8,18 +8,29 @@
     <string name="nav_settings">Settings</string>
 
     <!-- Home -->
-    <string name="home_greeting">Build your academic vocabulary</string>
-    <string name="home_subtitle">Short daily sessions with spaced repetition. You set the goal, and the app stops when you reach it.</string>
-    <string name="home_today_title">Today</string>
+    <string name="home_brand">WordWise.</string>
+    <string name="home_hero">Small steps,\nbig words.</string>
+    <string name="home_subtitle">Build your academic vocabulary, one word at a time. You set the goal, and the app stops when you reach it.</string>
+    <string name="home_goal_label">Today’s goal</string>
+    <string name="home_goal_count">%1$d / %2$d</string>
+    <string name="home_goal_unit">cards reviewed today</string>
+    <string name="home_goal_description">%1$d of %2$d cards reviewed today, %3$d percent of your goal</string>
+    <string name="home_space_title">Your learning space</string>
+    <string name="home_add_word">Add a word from the dictionary</string>
+    <string name="home_add_word_title">Add a word</string>
+    <string name="home_add_word_subtitle">Look it up and save the meaning you need</string>
+    <string name="home_progress_title">Your progress</string>
+    <string name="home_progress_subtitle">See how far you’ve come</string>
+    <string name="home_preferences_title">Preferences</string>
+    <string name="home_preferences_subtitle">Daily goal, difficulty and sound</string>
     <string name="home_loading">Loading your word deck…</string>
     <string name="home_load_error">The word deck couldn’t be loaded. Restart the app to try again.</string>
-    <string name="home_deck_summary">%1$d words in your collection · %2$d mastered</string>
+    <string name="home_deck_summary">%1$d words in your deck · %2$d mastered</string>
     <string name="home_reviewed_today">%1$d of %2$d cards reviewed today</string>
     <string name="home_goal_met">Done for today. Your next cards will be ready tomorrow.</string>
     <string name="home_start_session">Start today’s session</string>
     <string name="home_shortcut_stats">See my progress</string>
     <string name="home_shortcut_settings">Change my daily goal</string>
-    <string name="home_add_word">Add a word from the dictionary</string>
 
     <!-- Shared -->
     <string name="action_back">Back</string>
@@ -42,7 +53,8 @@
         <item quantity="other">Last card moved to box %1$d. You will see it again in %2$d days.</item>
     </plurals>
     <string name="study_feedback_again">Last card went back to box 1. You will see it again tomorrow.</string>
-    <string name="study_done_title">Done for today</string>
+    <string name="study_done_title">Done for today.</string>
+    <string name="study_done_tagline">Small steps make lasting progress.</string>
     <string name="study_done_body">You reviewed %1$d cards and reached your goal of %2$d. Rest is part of learning; your next cards will be ready tomorrow.</string>
     <string name="study_nothing_due_title">Nothing due right now</string>
     <string name="study_nothing_due_body">Every word at this difficulty is scheduled for a later day. Add a word, choose a harder level, or come back tomorrow.</string>

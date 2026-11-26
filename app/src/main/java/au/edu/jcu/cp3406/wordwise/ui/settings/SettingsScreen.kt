@@ -48,6 +48,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import au.edu.jcu.cp3406.wordwise.R
 import au.edu.jcu.cp3406.wordwise.model.Difficulty
 import au.edu.jcu.cp3406.wordwise.model.UserSettings
+import au.edu.jcu.cp3406.wordwise.ui.theme.ButtonShape
 import au.edu.jcu.cp3406.wordwise.ui.theme.WordWiseTheme
 import kotlin.math.roundToInt
 
@@ -253,7 +254,7 @@ private fun DataSection(onResetClick: () -> Unit) {
             text = stringResource(R.string.settings_data_body),
             style = MaterialTheme.typography.bodyMedium,
         )
-        OutlinedButton(onClick = onResetClick) {
+        OutlinedButton(shape = ButtonShape, onClick = onResetClick) {
             Text(
                 text = stringResource(R.string.settings_reset_button),
                 color = MaterialTheme.colorScheme.error,

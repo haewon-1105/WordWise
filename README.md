@@ -105,6 +105,7 @@ Open the project in Android Studio (Ladybug or newer), let Gradle sync, then run
 3. Online dictionary: Retrofit service for the Free Dictionary API, response parser and input validator with unit tests, Add a word screen with pronunciation playback, and pronunciation caching in Room.
 4. Study and Settings: flashcard session with flip animation, transparent scheduling feedback and Done for today; DataStore settings for goal, difficulty and read-aloud; progress reset; Home shows progress toward the goal.
 5. Statistics: live Stats screen with summary tiles, 7-day chart and memory-box chart, each with TalkBack text.
+6. Visual design: "Calm Academic" theme (forest green on ivory, serif headings, checked contrast, dark mode), a goal-first Home screen, and a hand-drawn sprout on the Done for today screen instead of a reward animation.
 
 ## References
 

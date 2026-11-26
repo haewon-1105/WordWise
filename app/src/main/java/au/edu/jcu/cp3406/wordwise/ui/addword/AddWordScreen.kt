@@ -54,6 +54,7 @@ import au.edu.jcu.cp3406.wordwise.R
 import au.edu.jcu.cp3406.wordwise.model.dictionary.DictionaryDefinition
 import au.edu.jcu.cp3406.wordwise.model.dictionary.DictionaryEntry
 import au.edu.jcu.cp3406.wordwise.model.dictionary.DictionaryMeaning
+import au.edu.jcu.cp3406.wordwise.ui.theme.ButtonShape
 import au.edu.jcu.cp3406.wordwise.ui.theme.WordWiseTheme
 
 /** Stateful entry point: search the online dictionary and add a word to the collection. */
@@ -149,7 +150,7 @@ fun AddWordContent(
                 )
             }
             item {
-                Button(onClick = submit, enabled = canSearch, modifier = Modifier.fillMaxWidth()) {
+                Button(shape = ButtonShape, onClick = submit, enabled = canSearch, modifier = Modifier.fillMaxWidth()) {
                     Text(stringResource(R.string.add_word_search))
                 }
             }
@@ -243,7 +244,7 @@ private fun EntryHeader(entry: DictionaryEntry, onPlayPronunciation: () -> Unit)
                 Text(text = it, style = MaterialTheme.typography.bodyLarge)
             }
             // Always available: a recording when the dictionary has one, otherwise the device voice.
-            FilledTonalButton(onClick = onPlayPronunciation) {
+            FilledTonalButton(shape = ButtonShape, onClick = onPlayPronunciation) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -280,7 +281,7 @@ private fun DefinitionCard(
                     fontStyle = FontStyle.Italic,
                 )
             }
-            OutlinedButton(onClick = onAdd, enabled = addEnabled) {
+            OutlinedButton(shape = ButtonShape, onClick = onAdd, enabled = addEnabled) {
                 Text(stringResource(R.string.add_word_add_meaning))
             }
         }

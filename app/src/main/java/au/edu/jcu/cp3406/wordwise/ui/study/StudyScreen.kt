@@ -17,7 +17,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -56,6 +55,8 @@ import au.edu.jcu.cp3406.wordwise.model.Flashcard
 import au.edu.jcu.cp3406.wordwise.model.StudySession
 import au.edu.jcu.cp3406.wordwise.model.Word
 import au.edu.jcu.cp3406.wordwise.model.WordSource
+import au.edu.jcu.cp3406.wordwise.ui.components.Sprout
+import au.edu.jcu.cp3406.wordwise.ui.theme.ButtonShape
 import au.edu.jcu.cp3406.wordwise.ui.theme.WordWiseTheme
 
 /** Stateful entry point: the activity screen where flashcards are studied. */
@@ -117,7 +118,7 @@ fun StudyContent(
 
                 StudyUiState.LoadFailed -> {
                     Text(stringResource(R.string.study_load_failed))
-                    Button(onClick = onRetry) { Text(stringResource(R.string.action_try_again)) }
+                    Button(shape = ButtonShape, onClick = onRetry) { Text(stringResource(R.string.action_try_again)) }
                 }
 
                 is StudyUiState.InSession -> SessionContent(
@@ -167,7 +168,7 @@ private fun SessionContent(
 
     Flashcard(card = card, isFlipped = session.isFlipped, onFlip = onFlip)
 
-    FilledTonalButton(onClick = onPlayPronunciation) {
+    FilledTonalButton(shape = ButtonShape, onClick = onPlayPronunciation) {
         Icon(Icons.AutoMirrored.Filled.VolumeUp, contentDescription = null, modifier = Modifier.size(18.dp))
         Text(stringResource(R.string.add_word_play), modifier = Modifier.padding(start = 8.dp))
     }
@@ -180,10 +181,12 @@ private fun SessionContent(
         // Both answers look the same: neither is pushed on the learner.
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             OutlinedButton(
+                shape = ButtonShape,
                 onClick = { onAnswer(false) },
                 modifier = Modifier.weight(1f).heightIn(min = 48.dp),
             ) { Text(stringResource(R.string.study_still_learning)) }
             OutlinedButton(
+                shape = ButtonShape,
                 onClick = { onAnswer(true) },
                 modifier = Modifier.weight(1f).heightIn(min = 48.dp),
             ) { Text(stringResource(R.string.study_knew_it)) }
@@ -193,7 +196,7 @@ private fun SessionContent(
             text = stringResource(R.string.study_think_first),
             style = MaterialTheme.typography.bodyMedium,
         )
-        Button(onClick = onFlip, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
+        Button(shape = ButtonShape, onClick = onFlip, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
             Text(stringResource(R.string.study_show_meaning))
         }
     }
@@ -340,12 +343,16 @@ private fun FinishedContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Icon(
-            imageVector = if (state.goalMet) Icons.Filled.CheckCircle else Icons.Filled.Schedule,
-            contentDescription = null,
-            modifier = Modifier.size(64.dp),
-            tint = MaterialTheme.colorScheme.primary,
-        )
+        if (state.goalMet) {
+            Sprout()
+        } else {
+            Icon(
+                imageVector = Icons.Filled.Schedule,
+                contentDescription = null,
+                modifier = Modifier.size(64.dp),
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        }
         Text(
             text = stringResource(if (state.goalMet) R.string.study_done_title else R.string.study_nothing_due_title),
             style = MaterialTheme.typography.headlineMedium,
@@ -361,6 +368,15 @@ private fun FinishedContent(
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
         )
+        if (state.goalMet) {
+            Text(
+                text = stringResource(R.string.study_done_tagline),
+                style = MaterialTheme.typography.bodyMedium,
+                fontStyle = FontStyle.Italic,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
+        }
         if (state.answeredThisSession > 0) {
             Text(
                 text = stringResource(
@@ -372,11 +388,11 @@ private fun FinishedContent(
                 textAlign = TextAlign.Center,
             )
         }
-        Button(onClick = onOpenStats, modifier = Modifier.fillMaxWidth()) {
+        Button(shape = ButtonShape, onClick = onOpenStats, modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.home_shortcut_stats))
         }
         // The app does not offer "keep going"; the learner can change their own goal instead.
-        OutlinedButton(onClick = onOpenSettings, modifier = Modifier.fillMaxWidth()) {
+        OutlinedButton(shape = ButtonShape, onClick = onOpenSettings, modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.home_shortcut_settings))
         }
         if (!state.goalMet) {
