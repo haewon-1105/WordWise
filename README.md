@@ -2,8 +2,6 @@
 
 An Android flashcard app that helps university students build academic English vocabulary through short daily sessions and spaced repetition. Built for CP3406 Assessment 3 with Kotlin, Jetpack Compose and Material Design 3.
 
-> Work in progress. This README grows with each development step.
-
 ## Core screens
 
 | Screen | Purpose | Status |
@@ -13,6 +11,16 @@ An Android flashcard app that helps university students build academic English v
 | Stats (user statistics) | Mastered words, accuracy, forgiving streak, 7-day chart, words per memory box | Done |
 | Settings | Daily goal, difficulty, read-aloud, reset my progress | Done |
 | Add a word (extra) | Look up a word online and add a chosen meaning | Done |
+
+## Screenshots
+
+| Home | Study: word | Study: meaning | Done for today |
+|---|---|---|---|
+| <img src="docs/screenshots/01-home.png" width="200" alt="Home screen with today's goal card"> | <img src="docs/screenshots/02-study-word.png" width="200" alt="Flashcard showing the word area"> | <img src="docs/screenshots/03-study-meaning.png" width="200" alt="Flashcard turned to show the meaning, with Still learning and I knew it buttons"> | <img src="docs/screenshots/04-done-for-today.png" width="200" alt="Done for today screen with a sprout illustration"> |
+
+| Stats | Add a word | Settings | Dark mode |
+|---|---|---|---|
+| <img src="docs/screenshots/05-stats.png" width="200" alt="Stats screen with summary tiles and 7-day chart"> | <img src="docs/screenshots/06-add-word.png" width="200" alt="Add a word screen showing a dictionary result"> | <img src="docs/screenshots/07-settings.png" width="200" alt="Settings screen with daily goal and difficulty"> | <img src="docs/screenshots/08-home-dark.png" width="200" alt="Home screen in dark mode with the goal met"> |
 
 ## Architecture
 
@@ -86,13 +94,22 @@ Informed by my Assessment 2 presentation on dark patterns and addictive design:
 
 ## Testing
 
-Model unit tests live in `app/src/test` and run on the JVM:
+**Unit tests** (`app/src/test`, JVM, 92 tests):
 
 ```
 ./gradlew testDebugUnitTest
 ```
 
-They cover the Leitner scheduler, session planning against the daily goal, the forgiving streak, statistics arithmetic, parsing of the bundled deck (including a check that the shipped deck file is valid), input validation, and parsing and status mapping of dictionary responses, including the API’s quirks (merged entries, empty audio links, protocol-relative URLs, malformed JSON).
+- *Model*: the Leitner scheduler, session planning against the daily goal, the forgiving streak, statistics arithmetic, parsing of the bundled deck (including a check that the shipped deck file is valid), input validation, and parsing and status mapping of dictionary responses, including the API’s quirks (merged entries, empty audio links, protocol-relative URLs, malformed JSON).
+- *ViewModels*: Study, Add a word, Settings, Home and Stats, run against hand-written fakes of the repository interfaces with `kotlinx-coroutines-test`. They check, for example, that an answer is ignored until the card is turned, that the last answer ends the session instead of offering more, that “nothing due” is told apart from “done for today”, that every lookup failure has its own state, and that the learner is told when the device voice replaces a missing recording.
+
+**GUI tests** (`app/src/androidTest`, Compose UI test, needs an emulator or device):
+
+```
+./gradlew connectedDebugAndroidTest
+```
+
+They render the stateless screens and check what the learner sees and which action each control triggers, including the ethical rules: Home offers progress, not more cards, once the goal is met; the answers appear only after the card is turned and both are offered; Done for today has no “keep going” button; TalkBack descriptions are present.
 
 ## Build
 
@@ -106,6 +123,7 @@ Open the project in Android Studio (Ladybug or newer), let Gradle sync, then run
 4. Study and Settings: flashcard session with flip animation, transparent scheduling feedback and Done for today; DataStore settings for goal, difficulty and read-aloud; progress reset; Home shows progress toward the goal.
 5. Statistics: live Stats screen with summary tiles, 7-day chart and memory-box chart, each with TalkBack text.
 6. Visual design: "Calm Academic" theme (forest green on ivory, serif headings, checked contrast, dark mode), a goal-first Home screen, and a hand-drawn sprout on the Done for today screen instead of a reward animation.
+7. Tests: ViewModel tests with fakes and Compose GUI tests for Home, Study and Stats.
 
 ## References
 

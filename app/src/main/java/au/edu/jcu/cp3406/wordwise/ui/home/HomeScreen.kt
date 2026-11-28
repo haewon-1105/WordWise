@@ -47,6 +47,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import au.edu.jcu.cp3406.wordwise.R
 import au.edu.jcu.cp3406.wordwise.ui.theme.ButtonShape
 import au.edu.jcu.cp3406.wordwise.ui.theme.WordWiseTheme
+import au.edu.jcu.cp3406.wordwise.ui.theme.paperCardColors
 import kotlin.math.roundToInt
 
 /** Stateful entry point used by the NavHost: gets its state from [HomeViewModel]. */
@@ -274,7 +275,7 @@ private fun ShortcutRow(
     Card(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLowest),
+        colors = paperCardColors(),
     ) {
         Row(
             modifier = Modifier

@@ -40,6 +40,7 @@ import au.edu.jcu.cp3406.wordwise.R
 import au.edu.jcu.cp3406.wordwise.model.DailyReviewCount
 import au.edu.jcu.cp3406.wordwise.model.LearningStats
 import au.edu.jcu.cp3406.wordwise.ui.theme.WordWiseTheme
+import au.edu.jcu.cp3406.wordwise.ui.theme.paperCardColors
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.Locale
@@ -141,6 +142,7 @@ private fun SummaryTiles(stats: LearningStats) {
 private fun StatTile(value: String, label: String, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier.clearAndSetSemantics { contentDescription = "$value, $label" },
+        colors = paperCardColors(),
     ) {
         Column(Modifier.padding(16.dp)) {
             Text(
@@ -165,7 +167,7 @@ private fun WeekChart(days: List<DailyReviewCount>, dailyGoal: Int) {
     }
     val description = stringResource(R.string.stats_week_description, dailyGoal, summary)
 
-    Card(Modifier.fillMaxWidth()) {
+    Card(Modifier.fillMaxWidth(), colors = paperCardColors()) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Text(
                 text = stringResource(R.string.stats_week_title),
@@ -227,7 +229,7 @@ private fun WeekChart(days: List<DailyReviewCount>, dailyGoal: Int) {
 @Composable
 private fun BoxChart(stats: LearningStats) {
     val maxCount = (stats.wordsPerBox.maxOrNull() ?: 0).coerceAtLeast(1)
-    Card(Modifier.fillMaxWidth()) {
+    Card(Modifier.fillMaxWidth(), colors = paperCardColors()) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text(
                 text = stringResource(R.string.stats_boxes_title),

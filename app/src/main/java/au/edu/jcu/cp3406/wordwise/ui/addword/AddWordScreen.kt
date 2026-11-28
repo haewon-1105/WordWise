@@ -56,6 +56,7 @@ import au.edu.jcu.cp3406.wordwise.model.dictionary.DictionaryEntry
 import au.edu.jcu.cp3406.wordwise.model.dictionary.DictionaryMeaning
 import au.edu.jcu.cp3406.wordwise.ui.theme.ButtonShape
 import au.edu.jcu.cp3406.wordwise.ui.theme.WordWiseTheme
+import au.edu.jcu.cp3406.wordwise.ui.theme.paperCardColors
 
 /** Stateful entry point: search the online dictionary and add a word to the collection. */
 @Composable
@@ -219,7 +220,7 @@ fun AddWordContent(
 
 @Composable
 private fun StatusMessage(textRes: Int) {
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(modifier = Modifier.fillMaxWidth(), colors = paperCardColors()) {
         Text(
             text = stringResource(textRes),
             style = MaterialTheme.typography.bodyMedium,
@@ -230,7 +231,7 @@ private fun StatusMessage(textRes: Int) {
 
 @Composable
 private fun EntryHeader(entry: DictionaryEntry, onPlayPronunciation: () -> Unit) {
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(modifier = Modifier.fillMaxWidth(), colors = paperCardColors()) {
         Column(
             modifier = Modifier.padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -268,7 +269,7 @@ private fun DefinitionCard(
     addEnabled: Boolean,
     onAdd: () -> Unit,
 ) {
-    OutlinedCard(modifier = Modifier.fillMaxWidth()) {
+    OutlinedCard(modifier = Modifier.fillMaxWidth(), colors = paperCardColors()) {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
