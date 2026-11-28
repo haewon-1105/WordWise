@@ -2,6 +2,8 @@
 
 An Android flashcard app that helps university students build academic English vocabulary through short daily sessions and spaced repetition. Built for CP3406 Assessment 3 with Kotlin, Jetpack Compose and Material Design 3.
 
+> Work in progress. This README grows with each development step.
+
 ## Core screens
 
 | Screen | Purpose | Status |
@@ -11,16 +13,6 @@ An Android flashcard app that helps university students build academic English v
 | Stats (user statistics) | Mastered words, accuracy, forgiving streak, 7-day chart, words per memory box | Done |
 | Settings | Daily goal, difficulty, read-aloud, reset my progress | Done |
 | Add a word (extra) | Look up a word online and add a chosen meaning | Done |
-
-## Screenshots
-
-| Home | Study: word | Study: meaning | Done for today |
-|---|---|---|---|
-| <img src="docs/screenshots/01-home.png" width="200" alt="Home screen with today's goal card"> | <img src="docs/screenshots/02-study-word.png" width="200" alt="Flashcard showing the word area"> | <img src="docs/screenshots/03-study-meaning.png" width="200" alt="Flashcard turned to show the meaning, with Still learning and I knew it buttons"> | <img src="docs/screenshots/04-done-for-today.png" width="200" alt="Done for today screen with a sprout illustration"> |
-
-| Stats | Add a word | Settings | Dark mode |
-|---|---|---|---|
-| <img src="docs/screenshots/05-stats.png" width="200" alt="Stats screen with summary tiles and 7-day chart"> | <img src="docs/screenshots/06-add-word.png" width="200" alt="Add a word screen showing a dictionary result"> | <img src="docs/screenshots/07-settings.png" width="200" alt="Settings screen with daily goal and difficulty"> | <img src="docs/screenshots/08-home-dark.png" width="200" alt="Home screen in dark mode with the goal met"> |
 
 ## Architecture
 
