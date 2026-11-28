@@ -2,8 +2,6 @@
 
 An Android flashcard app that helps university students build academic English vocabulary through short daily sessions and spaced repetition. Built for CP3406 Assessment 3 with Kotlin, Jetpack Compose and Material Design 3.
 
-> Work in progress. This README grows with each development step.
-
 ## Core screens
 
 | Screen | Purpose | Status |
@@ -13,6 +11,16 @@ An Android flashcard app that helps university students build academic English v
 | Stats (user statistics) | Mastered words, accuracy, forgiving streak, 7-day chart, words per memory box | Done |
 | Settings | Daily goal, difficulty, read-aloud, reset my progress | Done |
 | Add a word (extra) | Look up a word online and add a chosen meaning | Done |
+
+## Screenshots
+
+| Home | Study: word | Study: meaning | Done for today |
+|---|---|---|---|
+| <img src="docs/screenshots/01-home.png" width="200" alt="Home screen with today's goal card"> | <img src="docs/screenshots/02-study-word.png" width="200" alt="Flashcard showing the word area"> | <img src="docs/screenshots/03-study-meaning.png" width="200" alt="Flashcard turned to show the meaning, with Still learning and I knew it buttons"> | <img src="docs/screenshots/04-done-for-today.png" width="200" alt="Done for today screen with a sprout illustration"> |
+
+| Stats | Add a word | Settings | Dark mode |
+|---|---|---|---|
+| <img src="docs/screenshots/05-stats.png" width="200" alt="Stats screen with summary tiles and 7-day chart"> | <img src="docs/screenshots/06-add-word.png" width="200" alt="Add a word screen showing a dictionary result"> | <img src="docs/screenshots/07-settings.png" width="200" alt="Settings screen with daily goal and difficulty"> | <img src="docs/screenshots/08-home-dark.png" width="200" alt="Home screen in dark mode with the goal met"> |
 
 ## Architecture
 
@@ -105,7 +113,27 @@ They render the stateless screens and check what the learner sees and which acti
 
 ## Build
 
-Open the project in Android Studio (Ladybug or newer), let Gradle sync, then run the `app` configuration on an emulator or device with Android 8.0 (API 26) or higher.
+**Requirements**
+
+| Tool | Version |
+|---|---|
+| Android Studio | Ladybug (2024.2) or newer |
+| JDK for Gradle | **21** (the bundled JetBrains Runtime 21 works). Gradle 8.9 does not run on JDK 25. |
+| Android Gradle Plugin / Gradle | 8.7.3 / 8.9 |
+| Kotlin | 2.0.21 |
+| Android SDK | compileSdk and targetSdk 35, minSdk 26 (Android 8.0) |
+
+**Steps**
+
+1. Open the project in Android Studio and let Gradle sync.
+2. If the build says *Incompatible Gradle JVM version*, open **Settings → Build, Execution, Deployment → Build Tools → Gradle** and set **Gradle JDK** to **jbr-21**, then sync again.
+3. Run the `app` configuration on an emulator or device with Android 8.0 (API 26) or higher.
+
+**Troubleshooting**
+
+- *“Type … is defined multiple times”* with file names ending in “ 2.class”: a cloud sync service (such as iCloud Desktop & Documents) copied files inside `build/`. Keep the project outside synced folders and run `./gradlew clean`.
+- *No sound on the emulator*: Logcat (tag `PronunciationPlayer`) shows whether the device voice started. If it did, check the emulator’s media volume or cold boot it.
+- *GUI tests fail with `InputManager.getInstance`* on Android 16+: Espresso must be 3.7.0 or newer (already set in `libs.versions.toml`).
 
 ## Development log
 
